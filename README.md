@@ -1,4 +1,4 @@
-# Averis — Artisan System v0.1.1 (Foundry v14 preview)
+# Averis — Artisan System v0.2.0 (Foundry v14 preview)
 
 **Development preview, not production-ready.** Target: Foundry VTT v14, D&D 5e 5.3.3. English UI, dark fantasy/gold. Do not enable in your only copy of a live campaign. No Foundry runtime was available to run integration tests. Nine pure JavaScript rule/catalog tests passed; this does not verify the Foundry APIs, sheet hooks, or D&D item schema.
 
@@ -66,3 +66,8 @@ Repository: https://github.com/Daikaze/Crafting. The original v0.1.0 preview sou
 
 ## v14 compatibility preview
 Main windows now extend ApplicationV2; existing dialogs use the documented v14 legacy namespace. Actor header controls and scene controls have been adapted. Existing data, recipes and unfinished feature limitations remain unchanged. D&D 5e minimum remains 5.3.3; install a system version supported by your v14 build. Foundry runtime and Tidy Classic have not been tested. The v13 version remains on main.
+
+## v0.2.0
+- Dashboard card heights corrected, Gathering category filters, human-readable hours/minutes.
+- Recipe scrolls now have a Learn Recipe utility activity; old scrolls have a direct Learn action on supported sheets and remain usable through Artisan > Materials.
+- GM > Compendiums > Build all Artisan packs creates world Item packs for materials, scrolls, equipment, alchemy, meals, rune and enchantment references. Uses installed SRD bases where found and preserves existing custom links. Custom conditional mechanics or missing base templates are marked manual review. Generated templates do not assert fully automated combat effects. Existing worlds are not reset. Test on a copy.
