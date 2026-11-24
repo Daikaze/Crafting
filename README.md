@@ -74,3 +74,8 @@ Main windows now extend ApplicationV2; existing dialogs use the documented v14 l
 
 ## v0.2.1
 GM Projects and the Dashboard project count now include only character actors assigned to, or owned by, non-GM users (including offline users). NPCs and GM-only actors remain available in Actor Management and NPC Orders. No projects or actor records are deleted. Recipe learning is unchanged.
+
+## v0.2.2 — Learning System
+- Player Learning: instant Recipe Scrolls, reusable Recipe Books, NPC Training, active/paused lessons. Direct GM Unlock remains available in GM Learning and Actors. No learning rolls. Proficiency is required for scrolls, book study, and training; direct GM unlock overrides learning prerequisites, not crafting requirements.
+- NPC training defaults: Common 10 GP / 2h; Uncommon 35 GP / 4h; Rare 100 GP / 8h; Very Rare 300 GP / 16h. GM configures each NPC's eligible students, teachable recipes (must already be learned by NPC), rates and duration. NPC must have required proficiency. Fees paid once at start; cancel does not refund. Book study is free, takes 1/2/4/8h, requires book in inventory, and never consumes book. Both use manual downtime budget and share one active project slot with crafting; paused lessons allowed. Smart approval applies to book study and NPC training, scrolls remain immediate.
+- GM → Learning → Create Recipe Book creates an item directly in selected actor inventory; configure NPC training after giving NPC recipes and proficiency. Existing data retained. Foundry runtime not tested.
