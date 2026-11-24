@@ -2,7 +2,7 @@
   "id": "averis-artisan-system",
   "title": "Averis — Artisan System",
   "description": "Journal-driven artisan workflows for Averis. Development preview.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "compatibility": {
     "minimum": "14",
     "maximum": "14"
@@ -31,5 +31,5 @@
   ],
   "url": "https://github.com/Daikaze/Crafting",
   "manifest": "https://raw.githubusercontent.com/Daikaze/Crafting/v14/module.json",
-  "download": "https://github.com/Daikaze/Crafting/archive/refs/heads/v0.4.0-v14.zip"
+  "download": "https://github.com/Daikaze/Crafting/archive/refs/heads/v0.5.0-v14.zip"
 }
