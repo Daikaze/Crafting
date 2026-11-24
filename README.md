@@ -1,16 +1,16 @@
-# Averis — Artisan System v0.1.0
+# Averis — Artisan System v0.1.1 (Foundry v14 preview)
 
-**Development preview, not production-ready.** Target: Foundry VTT v13, D&D 5e 5.3.3. English UI, dark fantasy/gold. Do not enable in your only copy of a live campaign. No Foundry runtime was available to run integration tests. Nine pure JavaScript rule/catalog tests passed; this does not verify the Foundry APIs, sheet hooks, or D&D item schema.
+**Development preview, not production-ready.** Target: Foundry VTT v14, D&D 5e 5.3.3. English UI, dark fantasy/gold. Do not enable in your only copy of a live campaign. No Foundry runtime was available to run integration tests. Nine pure JavaScript rule/catalog tests passed; this does not verify the Foundry APIs, sheet hooks, or D&D item schema.
 
 ## Install via Foundry Manifest URL
 
 In Setup → Add-on Modules → Install Module, paste:
 
 ```text
-https://raw.githubusercontent.com/Daikaze/Crafting/main/module.json
+https://raw.githubusercontent.com/Daikaze/Crafting/v14/module.json
 ```
 
-Versioned source archive: https://github.com/Daikaze/Crafting/archive/refs/heads/v0.1.0.zip. Install in a test world first. Remote installation has not been runtime-tested.
+Versioned source archive: https://github.com/Daikaze/Crafting/archive/refs/heads/v0.1.1-v14.zip. Install in a test world first. Remote installation has not been runtime-tested.
 
 ## Install locally
 1. Back up your world. Stop Foundry. Extract the `averis-artisan-system` folder into your Foundry User Data `Data/modules/` directory. On a typical Windows default install this is `%LOCALAPPDATA%/FoundryVTT/Data/modules/`, but check your actual User Data path.
@@ -63,3 +63,6 @@ If neither opens, open F12 > Console and look for `averis-artisan-system` errors
 `node --test tests/rules.test.mjs` tests the independent rules and parsed catalog. `node --check scripts/main.js` checks syntax. `tools/build_data.py /path/to/journal-exports` regenerates the catalog (Python + beautifulsoup4). The four source filenames must contain `hybrid`, `gathering`, `enchanting`, `cooking` respectively. Import into a GM-managed test world and test all action flows before a release. Do not overwrite the GM database by updating the package; use the catalog import UI only after backing up. Version 0.1.0 is intentionally not marked verified in its manifest.
 
 Repository: https://github.com/Daikaze/Crafting. The original v0.1.0 preview source is published here; the manifest points to a versioned source archive.
+
+## v14 compatibility preview
+Main windows now extend ApplicationV2; existing dialogs use the documented v14 legacy namespace. Actor header controls and scene controls have been adapted. Existing data, recipes and unfinished feature limitations remain unchanged. D&D 5e minimum remains 5.3.3; install a system version supported by your v14 build. Foundry runtime and Tidy Classic have not been tested. The v13 version remains on main.
