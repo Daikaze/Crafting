@@ -71,3 +71,6 @@ Main windows now extend ApplicationV2; existing dialogs use the documented v14 l
 - Dashboard card heights corrected, Gathering category filters, human-readable hours/minutes.
 - Recipe scrolls now have a Learn Recipe utility activity; old scrolls have a direct Learn action on supported sheets and remain usable through Artisan > Materials.
 - GM > Compendiums > Build all Artisan packs creates world Item packs for materials, scrolls, equipment, alchemy, meals, rune and enchantment references. Uses installed SRD bases where found and preserves existing custom links. Custom conditional mechanics or missing base templates are marked manual review. Generated templates do not assert fully automated combat effects. Existing worlds are not reset. Test on a copy.
+
+## v0.2.1
+GM Projects and the Dashboard project count now include only character actors assigned to, or owned by, non-GM users (including offline users). NPCs and GM-only actors remain available in Actor Management and NPC Orders. No projects or actor records are deleted. Recipe learning is unchanged.
