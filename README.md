@@ -1,4 +1,7 @@
-# Averis — Artisan System v0.2.0 (Foundry v14 preview)
+# Averis — Artisan System v1.0.0 (Foundry VTT v14)
+
+Version 1.0.0 is the first feature release. Foundry runtime acceptance testing is still required; do not treat it as a verified stable release. Back up the world before updating.
+
 
 **Development preview, not production-ready.** Target: Foundry VTT v14, D&D 5e 5.3.3. English UI, dark fantasy/gold. Do not enable in your only copy of a live campaign. No Foundry runtime was available to run integration tests. Nine pure JavaScript rule/catalog tests passed; this does not verify the Foundry APIs, sheet hooks, or D&D item schema.
 
@@ -10,7 +13,7 @@ In Setup → Add-on Modules → Install Module, paste:
 https://raw.githubusercontent.com/Daikaze/Crafting/v14/module.json
 ```
 
-Versioned source archive: https://github.com/Daikaze/Crafting/archive/refs/heads/v0.1.1-v14.zip. Install in a test world first. Remote installation has not been runtime-tested.
+Versioned source archive: https://github.com/Daikaze/Crafting/archive/refs/heads/v1.0.0-v14.zip. Install in a test world first. Remote installation has not been runtime-tested.
 
 ## Install locally
 1. Back up your world. Stop Foundry. Extract the `averis-artisan-system` folder into your Foundry User Data `Data/modules/` directory. On a typical Windows default install this is `%LOCALAPPDATA%/FoundryVTT/Data/modules/`, but check your actual User Data path.
@@ -96,3 +99,9 @@ GM Gathering tab includes player region assignment, resource patch controls and 
 - Optional integrations (GM Settings, off by default): Midi-QOL single-hit damage-rune prompt on GM-executed linked-actor weapon attacks, using DamageOnlyWorkflow after explicit GM confirmation. Only simple damage runes supported; no automation for player-local workflows, multi-target or complex triggers. Native/DAE: link GM-authored self ActiveEffect UUID per recipe, apply on Use Power, preserving DAE flags only when DAE is active. GM must configure duration and effect changes; no blanket conversion of 72 patterns, no automatic damage-rider enforcement across manual effects. Do not link target effects as self effects.
 - Tidy 5e header integration via official registerActorHeaderControls API (if present); standard header fallback. Item sheet summary, Favorites, Craftable Only filter, missing-requirement messages, result-item drag/drop and sticky navigation. Existing unique windows preserved. Standard sheet / Tidy runtime not tested.
 - Performance: publish player-owned actors and open actor panels instead of all NPCs, batch inventory event refreshes, debounce rendering, count materials in one pass, preserve existing state. GM Settings diagnostics and full GM backup export. No actual FPS or multiplayer benchmark; test on a copy. Player-originated rest updates now require one GM approval request for meals and modifications, preventing direct charge-reset requests. Known limits: source catalog is a client-readable module asset, so hidden DCs/recipes are UI restrictions rather than absolute secrecy. Item and currency operations are not fully atomic under server disconnect. Blacksmith Refinements source not included. Conditional and custom effects still require GM review. This is a development release, not 1.0.
+
+## v1.0.0 — release hardening
+- Database schema 1 migration fills missing fields without resetting actor knowledge, budget, projects, regions, orders or links. New primary GM reloads persisted state. Linked world actors only: unlinked synthetic token actors are intentionally blocked to avoid mixing inventory/state records.
+- Material requirements are aggregated by stable ID; partial ordinary material reservation failures attempt rollback. Project and NPC order settlement checkpoint outcomes and chosen losses before output/refund; transaction tags prevent duplicate grants on retry while the original tagged item remains in inventory. GM Settings > Recovery queue retries unresolved projects/orders. Check inventory before retrying: transfers, deleted/merged items, server disconnects and incomplete initial reservations may still require manual repair. This is not an atomic database transaction.
+- GM Settings > Validate catalog verifies recipe and material IDs, resources and references to active records; import rejects catalogs that would remove referenced data. Rebuild player views and GM backup export available. Public recipe views use an explicit field allowlist and redact DCs from text. Bundled catalog remains readable by clients; hidden recipes/DC are not absolute secrecy. Existing custom Items and compendiums unchanged.
+- Optional MIDI/DAE integrations retain v0.9 restrictions. Not every homebrew conditional effect has automatic combat resolution. Missing Blacksmith Refinements remains outside bundled rules. Native Foundry v14, D&D 5e, Tidy and multiplayer acceptance checks must be performed by GM; no runtime or FPS benchmark performed here. See TESTING.md.

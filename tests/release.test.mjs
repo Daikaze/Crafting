@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const source=fs.readFileSync(new URL('../scripts/main.js',import.meta.url),'utf8');
+const catalog=JSON.parse(fs.readFileSync(new URL('../data/catalog.json',import.meta.url),'utf8'));
+const segment=source.slice(source.indexOf('const STATE_SCHEMA='),source.indexOf('function recoveryHTML'));
+const validator=source.slice(source.indexOf('function validateRecipe('),source.indexOf('function scrollData('));
+const api=new Function('cats','F',segment+validator+'return {migrateState,validateCatalog,aggregateMaterials,grantOnce};')(['Blacksmithing','Alchemy','Herbalism','Mining','Enchanting','Cooking','Runecrafting','Engineering','Jewelcrafting'],'averis');
+test('bundled catalog is valid',()=>assert.equal(api.validateCatalog(catalog),catalog));
+test('migration preserves user data and adds defaults',()=>{const old={catalog,actors:{a:{learned:['r'],projects:[{id:'p'}],budget:125}},orders:[{id:'o'}]};const x=api.migrateState(old);assert.equal(x.schema,1);assert.deepEqual(x.actors.a.learned,['r']);assert.equal(x.actors.a.projects[0].id,'p');assert.equal(x.actors.a.budget,125);assert.equal(x.orders[0].id,'o');assert.deepEqual(x.actors.a.learning,[]);assert.equal(x.integrations.midi,false);});
+test('future schema rejected',()=>assert.throws(()=>api.migrateState({catalog,schema:2})));
+test('duplicate catalog IDs rejected',()=>assert.throws(()=>api.validateCatalog({...catalog,materials:[...catalog.materials,catalog.materials[0]]})));
+test('unknown material rejected',()=>assert.throws(()=>api.validateCatalog({...catalog,recipes:[{...catalog.recipes[0],materials:[{id:'unknown',name:'Unknown',qty:1}]}]})));
+test('duplicate material requirements aggregate',()=>assert.equal(api.aggregateMaterials([{id:'x',qty:2},{id:'x',qty:3}])[0].qty,5));
+test('tagged grant does not repeat if item remains',async()=>{const actor={items:[],async createEmbeddedDocuments(t,docs){const result=docs.map(d=>({...d,getFlag:(f,k)=>d.flags?.[f]?.[k]}));this.items.push(...result);return result;}};await api.grantOnce(actor,{name:'Output',system:{quantity:1},_id:'old'},'p:1');await api.grantOnce(actor,{name:'Output',system:{quantity:1}},'p:1');assert.equal(actor.items.length,1);assert.equal(actor.items[0]._id,undefined);await api.grantOnce(actor,{name:'Output',system:{quantity:1}},'p:2');assert.equal(actor.items.length,2);});
+test('main script parses',()=>assert.doesNotThrow(()=>new Function(source.replace(/^import .*?;\s*/,''))));
